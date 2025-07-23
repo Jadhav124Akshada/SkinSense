@@ -17,13 +17,39 @@ function showSuccess(message) {
 }
 
 // 🧾 Dummy validation function
-function validateLogin() {
-    const email = document.getElementById("email").value;
+function validateForm() {
+    const name=document.getElementById("fullname").value.trim();
+    const email = document.getElementById("email").value.trim();
     const pass = document.getElementById("password").value;
-    if (!email || !pass) {
-        alert("Please enter email and password!");
+    const result=document.getElementById("error");
+
+    const nameregax=/^[A-Za-z\s]{2,}$/;
+
+    if(!nameregax.test(name) || name==" "){
+       alert("Enter valid fullname");
+       return false;
+    }
+    const emailregax=/[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailregax.test(email) || email==" ") {
+        alert("Please enter correct email format");
         return false;
     }
-    return true;
+    
+    const passregax=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if(passregax.test(pass)){
+        result.innerText="Strong password";
+        result.style.color="green";
+    }
+    else{
+        result.innerText="Password must be at least 8 characters,include uppercase,lowercase,number,and special character";
+        result.style.color="red";
+        return false;
+    }
+    
+        window.location.href = 'dashboard.html';
+    
+        return false;
 }
+
+
 
