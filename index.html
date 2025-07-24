@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SkinSense – Home</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="welcome-container">
-    <img src="logo.jpg" alt="SkinSense Logo" class="logo-img">
-    <h1>Welcome to <span>SkinSense</span></h1>
-    
-    <div class="d-flex justify-content-center btn-group-custom flex-wrap">
-      <a href="login.html" class="btn btn-primary">Login</a>
+    <img src="logo.jpg" alt="SkinSense Logo" class="logo-img" data-aos="fade-down"/>
+    <h1 data-aos="zoom-in">Welcome to <span>SkinSense</span></h1>
+
+    <div class="d-flex justify-content-center btn-group-custom flex-wrap" data-aos="fade-up">
+      <a href="login.html" class="btn btn-primary me-2">Login</a>
       <a href="register.html" class="btn btn-outline-primary">Register</a>
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- AOS Animation JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- Custom JS -->
   <script src="script.js"></script>
 </body>
 </html>
