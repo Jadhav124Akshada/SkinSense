@@ -2,16 +2,47 @@
 <html>
 <head>
     <title>Result - SkinSense</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Prediction Result</h2>
+  <nav class="navbar-glass">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.jpg" alt="SkinSense Logo"> SkinSense
+    </a>
+    <div class="navbar-links">
+      <a class="navbar-link" href="index.html">Home</a>
+      <a class="navbar-link" href="dashboard.html">Dashboard</a>
+      <a class="navbar-link" href="upload.html">Upload</a>
+      <a class="navbar-link active" href="result.html">Results</a>
+      <a class="navbar-link" href="appointment.html">Appointments</a>
+      <a class="navbar-link" href="login.html">Login</a>
+      <a class="navbar-link" href="register.html">Register</a>
+    </div>
+  </nav>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="glass-card animate-fade-in p-4 text-center" style="max-width: 420px; width: 100%;">
+      <img src="logo.jpg" alt="SkinSense Logo" class="logo-img mb-2">
+      <h2 class="fw-bold mb-2">Prediction Result</h2>
+      <p class="tagline">Here are your AI-powered results:</p>
+      <div class="mb-3">
         <p>Disease: <strong>Acne Vulgaris</strong></p>
         <p>Confidence: <strong>92%</strong></p>
-        <a href="appointment.html" class="btn btn-success">Book Doctor</a>
-        <a href="#" class="btn btn-outline-secondary">Download PDF</a>
+      </div>
+      <div class="mb-3">
+        <p class="mb-1">Recommendations:</p>
+        <ul class="list-unstyled mb-2">
+          <li>• Keep skin clean and moisturized</li>
+          <li>• Avoid harsh chemicals</li>
+          <li>• Consult a dermatologist if symptoms persist</li>
+        </ul>
+      </div>
+      <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+        <a href="appointment.html" class="btn btn-primary btn-glass">Book Doctor</a>
+        <a href="#" class="btn btn-outline-secondary btn-glass">Download PDF</a>
+        <a href="dashboard.html" class="btn btn-outline-primary btn-glass">Back to Dashboard</a>
+      </div>
     </div>
+  </div>
 </body>
 </html>
 

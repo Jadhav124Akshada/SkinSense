@@ -15,13 +15,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="welcome-container">
+  <nav class="navbar-glass">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.jpg" alt="SkinSense Logo"> SkinSense
+    </a>
+    <div class="navbar-links">
+      <a class="navbar-link active" href="index.html">Home</a>
+      <a class="navbar-link" href="dashboard.html">Dashboard</a>
+      <a class="navbar-link" href="upload.html">Upload</a>
+      <a class="navbar-link" href="result.html">Results</a>
+      <a class="navbar-link" href="appointment.html">Appointments</a>
+      <a class="navbar-link" href="login.html">Login</a>
+      <a class="navbar-link" href="register.html">Register</a>
+    </div>
+  </nav>
+  <div class="welcome-container glass-card animate-fade-in">
     <img src="logo.jpg" alt="SkinSense Logo" class="logo-img">
     <h1>Welcome to <span>SkinSense</span></h1>
-    
+    <p class="tagline">AI-powered skin analysis for a healthier you.</p>
     <div class="d-flex justify-content-center btn-group-custom flex-wrap">
-      <a href="login.html" class="btn btn-primary">Login</a>
-      <a href="register.html" class="btn btn-outline-primary">Register</a>
+      <a href="login.html" class="btn btn-primary btn-glass"><span class="icon-login"></span> Login</a>
+      <a href="register.html" class="btn btn-outline-primary btn-glass"><span class="icon-register"></span> Register</a>
     </div>
   </div>
 

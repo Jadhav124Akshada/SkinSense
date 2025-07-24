@@ -7,19 +7,50 @@
 
   <!-- Bootstrap & Custom CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container text-center py-5">
-    <img src="images/logo.png" class="img-fluid mb-3" width="80">
-    <h2 class="fw-bold mb-4">Welcome to Your Dashboard</h2>
-
-    <div class="d-flex flex-column flex-md-row justify-content-center gap-4">
-      <a href="upload.html" class="btn btn-primary px-4 py-2">Upload Skin Image</a>
-      <a href="result.html" class="btn btn-success px-4 py-2">View Result</a>
-      <a href="appointment.html" class="btn btn-warning px-4 py-2 text-white">Book Appointment</a>
+  <nav class="navbar-glass">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.jpg" alt="SkinSense Logo"> SkinSense
+    </a>
+    <div class="navbar-links">
+      <a class="navbar-link" href="index.html">Home</a>
+      <a class="navbar-link active" href="dashboard.html">Dashboard</a>
+      <a class="navbar-link" href="upload.html">Upload</a>
+      <a class="navbar-link" href="result.html">Results</a>
+      <a class="navbar-link" href="appointment.html">Appointments</a>
+      <a class="navbar-link" href="login.html">Login</a>
+      <a class="navbar-link" href="register.html">Register</a>
     </div>
-
+  </nav>
+  <div class="container py-5 d-flex flex-column align-items-center">
+    <div class="glass-card animate-fade-in text-center mb-4" style="max-width: 420px; width: 100%;">
+      <img src="logo.jpg" class="logo-img mb-2" width="80" alt="SkinSense Logo">
+      <h2 class="fw-bold mb-2">Welcome, <span>User</span>!</h2>
+      <p class="tagline">Your AI-powered skin health dashboard</p>
+    </div>
+    <div class="row w-100 justify-content-center mb-4">
+      <div class="col-12 col-md-4 mb-3">
+        <div class="glass-card text-center p-3">
+          <h6 class="mb-1">Last Analysis</h6>
+          <div class="fw-bold">Acne Vulgaris</div>
+          <div class="small text-muted">92% confidence</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div class="glass-card text-center p-3">
+          <h6 class="mb-1">Next Appointment</h6>
+          <div class="fw-bold">Dr. Smith</div>
+          <div class="small text-muted">12 Aug, 2:00 PM</div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-4 w-100">
+      <a href="upload.html" class="btn btn-primary btn-glass px-4 py-2">Upload Skin Image</a>
+      <a href="result.html" class="btn btn-success btn-glass px-4 py-2">View Result</a>
+      <a href="appointment.html" class="btn btn-outline-primary btn-glass px-4 py-2">Book Appointment</a>
+    </div>
     <p class="mt-5 small text-muted">Logged in as: <strong>user@example.com</strong></p>
   </div>
 
