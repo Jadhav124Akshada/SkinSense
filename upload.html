@@ -18,6 +18,14 @@
             <button class="btn btn-warning">Submit</button>
         </form>
     </div>
+    <script>
+        function onImageUpload() {
+          localStorage.setItem("disease", "Eczema");
+          localStorage.setItem("confidence", "95%");
+          window.location.href = "result.html";
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
 

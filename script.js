@@ -46,10 +46,7 @@ function handleRegister(event) {
     window.location.href = "login.html";
     return false;
 }
-// In script.js when result is ready
-localStorage.setItem("disease", "Eczema");
-localStorage.setItem("confidence", "95%");
-window.location.href = "result.html";
+
 
 // In result.html add <script> to fetch & show
 window.onload = function() {
