@@ -9,28 +9,56 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <nav class="navbar-glass">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.jpg" alt="SkinSense Logo"> SkinSense
+    </a>
+    <div class="navbar-links">
+      <a class="navbar-link" href="index.html">Home</a>
+      <a class="navbar-link" href="dashboard.html">Dashboard</a>
+      <a class="navbar-link" href="upload.html">Upload</a>
+      <a class="navbar-link" href="result.html">Results</a>
+      <a class="navbar-link" href="appointment.html">Appointments</a>
+      <a class="navbar-link" href="login.html">Login</a>
+      <a class="navbar-link active" href="register.html">Register</a>
+    </div>
+  </nav>
   <div class="form-container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
-      <h3 class="text-center mb-3">Create Account</h3>
-      <form>
-        <div class="mb-3">
+    <div class="glass-card animate-fade-in" style="width: 100%; max-width: 400px;">
+      <div class="text-center mb-3">
+        <img src="logo.jpg" alt="SkinSense Logo" class="logo-img mb-2">
+        <h3 class="fw-bold">Create Account</h3>
+        <p class="tagline">Join SkinSense for AI-powered skin health.</p>
+      </div>
+      <form id="register-form" autocomplete="off">
+        <div class="mb-3 text-start">
           <label for="fullname" class="form-label">Full Name</label>
-          <input type="text" id="fullname" class="form-control" placeholder="Enter full name" required />
+          <div class="input-group">
+            <span class="input-group-text"><span class="icon-register"></span></span>
+            <input type="text" id="fullname" class="form-control" placeholder="Enter full name" required />
+          </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" placeholder="Enter email" required />
+          <div class="input-group">
+            <span class="input-group-text"><span class="icon-login"></span></span>
+            <input type="email" id="email" class="form-control" placeholder="Enter email" required />
+          </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" placeholder="Create password" required />
+          <div class="input-group">
+            <span class="input-group-text"><span class="icon-login"></span></span>
+            <input type="password" id="password" class="form-control" placeholder="Create password" required />
+          </div>
         </div>
         <div class="d-grid">
-          <button type="submit" class="btn btn-success">Register</button>
+          <button type="submit" class="btn btn-primary btn-glass">Register</button>
         </div>
+        <div id="register-feedback" class="text-danger mt-2 small" style="display:none;"></div>
         <p class="text-center mt-3 small">Already have an account? <a href="login.html">Login here</a></p>
       </form>
     </div>
@@ -38,5 +66,22 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+document.getElementById('register-form').onsubmit = function(e) {
+  e.preventDefault();
+  const name = document.getElementById('fullname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('password').value.trim();
+  const feedback = document.getElementById('register-feedback');
+  if (!name || !email || !pass) {
+    feedback.innerText = 'Please fill all fields!';
+    feedback.style.display = 'block';
+    return false;
+  }
+  // Simulate registration (accept any data)
+  localStorage.setItem('ss_user', JSON.stringify({ email, name }));
+  window.location.href = 'dashboard.html';
+};
+</script>
 </body>
 </html>

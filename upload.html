@@ -2,22 +2,57 @@
 <html>
 <head>
     <title>Upload Image - SkinSense</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Upload Skin Image</h2>
-        <form enctype="multipart/form-data">
-            <input type="file" class="form-control mb-3" accept="image/*">
-            
-            <label>Select Symptoms:</label><br>
-            <input type="checkbox" value="itchy"> Itchy
-            <input type="checkbox" value="painful"> Painful
-            <input type="checkbox" value="red"> Red <br><br>
-            
-            <button class="btn btn-warning">Submit</button>
-        </form>
+  <nav class="navbar-glass">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.jpg" alt="SkinSense Logo"> SkinSense
+    </a>
+    <div class="navbar-links">
+      <a class="navbar-link" href="index.html">Home</a>
+      <a class="navbar-link" href="dashboard.html">Dashboard</a>
+      <a class="navbar-link active" href="upload.html">Upload</a>
+      <a class="navbar-link" href="result.html">Results</a>
+      <a class="navbar-link" href="appointment.html">Appointments</a>
+      <a class="navbar-link" href="login.html">Login</a>
+      <a class="navbar-link" href="register.html">Register</a>
     </div>
+  </nav>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="glass-card animate-fade-in p-4" style="max-width: 420px; width: 100%;">
+      <div class="text-center mb-3">
+        <img src="logo.jpg" alt="SkinSense Logo" class="logo-img mb-2">
+        <h2 class="fw-bold mb-2">Upload Skin Image</h2>
+        <p class="tagline">Get instant AI analysis for your skin health.</p>
+      </div>
+      <form enctype="multipart/form-data" onsubmit="showSuccess('Image uploaded!'); return false;">
+        <div class="mb-3">
+          <label for="skin-image" class="form-label">Select Image</label>
+          <input type="file" id="skin-image" class="form-control" accept="image/*" onchange="previewImage(event)" required>
+        </div>
+        <img id="preview" src="#" alt="Preview" style="display:none; max-width:100%; border-radius:12px; margin-bottom:1rem;" />
+        <div class="mb-3 text-start">
+          <label class="form-label">Select Symptoms:</label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="itchy" value="itchy">
+            <label class="form-check-label" for="itchy">Itchy</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="painful" value="painful">
+            <label class="form-check-label" for="painful">Painful</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="red" value="red">
+            <label class="form-check-label" for="red">Red</label>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary btn-glass">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
 
