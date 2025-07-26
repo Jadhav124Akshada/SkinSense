@@ -15,7 +15,7 @@
   <div class="form-container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
       <h3 class="text-center mb-3">Create Account</h3>
-      <form>
+      <form onsubmit="return validateRegister(event);">
         <div class="mb-3">
           <label for="fullname" class="form-label">Full Name</label>
           <input type="text" id="fullname" class="form-control" placeholder="Enter full name" required />
@@ -27,6 +27,10 @@
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" id="password" class="form-control" placeholder="Create password" required />
+        </div>
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label">Confirm Password</label>
+          <input type="password" id="confirm-password" class="form-control" placeholder="Confirm password" required />
         </div>
         <div class="d-grid">
           <button type="submit" class="btn btn-success">Register</button>
