@@ -18,20 +18,21 @@ SkinSense is an intelligent web-based platform that leverages AI to detect skin 
 ### ✅ Project Structure Organized
 ```
 frontend/
-├── css/
-│   └── style.css               # Main stylesheet
-├── images/
-│   ├── logo.jpg
-│   └── logo.png                # Logos for branding
-├── js/
-│   └── script.js               # Placeholder for JS logic
-├── index.html
-├── login.html
-├── register.html
-├── upload.html
-├── result.html
-├── appointment.html
-├── dashboard.html
+├── css/                        # Main stylesheet
+│ └── style.css
+├── images/                     # Logos for branding
+│ └── logo.jpg
+├── js/                         # Placeholder for JS logic
+│ └── script.js
+├── pages/                      # Internal HTML pages
+│ ├── appointment.html
+│ ├── dashboard.html
+│ ├── login.html
+│ ├── register.html
+│ ├── result.html
+│ └── upload.html
+├── index.html # Main entry page
+└── README.md # Project overview
 ```
 
 ### ✅ UI/UX Features
