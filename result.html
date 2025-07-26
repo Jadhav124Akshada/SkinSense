@@ -12,6 +12,12 @@
         <a href="appointment.html" class="btn btn-success">Book Doctor</a>
         <a href="#" class="btn btn-outline-secondary">Download PDF</a>
     </div>
+    <script>
+      window.onload = function() {
+          document.querySelector("strong:nth-of-type(1)").innerText = localStorage.getItem("disease");
+          document.querySelector("strong:nth-of-type(2)").innerText = localStorage.getItem("confidence");
+      };
+    </script>
 </body>
 </html>
 
