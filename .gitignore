@@ -1,0 +1,10 @@
+# Python / Django files
+__pycache__/
+*.pyc
+db.sqlite3
+venv/
+.env
+
+# Large Media uploads to ignore
+media/
+mri_scans/
