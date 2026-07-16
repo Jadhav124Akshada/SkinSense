@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="featured-services section light-background mt-5">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Select Diagnostic Approach</h2>
+    <p>Choose between structured symptom criteria evaluation or automated image analysis</p>
+  </div>
+
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="row gy-4 text-center justify-content-center w-100">
+
+       <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="200">
+        <div class="card shadow-lg border-0 rounded-4 p-4 h-100 hover-card" style="cursor: pointer;" onclick="window.location='{% url 'mri' %}'">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="mb-3">
+                <i class="fas fa-diagnoses fa-3x text-success"></i>
+              </div>
+              <h3 class="card-title fw-bold">Image-Based Analysis</h3>
+              <p class="card-text text-muted">Submit high-resolution patient photographic data for automated AI screening.</p>
+            </div>
+            <div>
+              <a href="{% url 'mri' %}" class="btn btn-success mt-3 px-4 py-2 rounded-pill">
+                Proceed to Analysis <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="card shadow-lg border-0 rounded-4 p-4 h-100 hover-card" style="cursor: pointer;" onclick="window.location='{% url 'dashboard' %}'">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="mb-3">
+                <i class="fas fa-file-medical fa-3x text-primary"></i>
+              </div>
+              <h3 class="card-title fw-bold">Symptom Assessment</h3>
+              <p class="card-text text-muted">Evaluate clinical indications and patient-reported symptoms for diagnostic insights.</p>
+            </div>
+            <div>
+              <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3 px-4 py-2 rounded-pill">
+                Begin Assessment <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .hover-card {
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    background: #ffffff;
+  }
+  .hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+  }
+  .card-title {
+    color: #333333;
+    font-size: 1.5rem;
+  }
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+</style>
+{% endblock body %}

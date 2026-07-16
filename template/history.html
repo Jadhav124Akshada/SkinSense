@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<style>
+    .history-container { padding-top: 120px; padding-bottom: 60px; min-height: 85vh; }
+    .nav-pills .nav-link.active { background-color: var(--skin-primary); border-color: var(--skin-primary); }
+    .nav-pills .nav-link { color: var(--text-color); font-weight: 600; margin-right: 10px; border: 1px solid var(--border-color); background: var(--card-bg); }
+    .table-container { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+    .img-thumbnail-custom { width: 45px; height: 45px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); }
+    .btn-action { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; transition: 0.2s; }
+    .bulk-delete-btn { display: none; margin-bottom: 15px; transition: 0.3s; }
+</style>
+
+<div class="history-container">
+    <div class="container">
+        <div class="section-title text-center mb-5" data-aos="fade-up">
+            <h2>Medical History</h2>
+            <p>Track your diagnostic results and appointment status</p>
+        </div>
+
+        <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="pills-mri-tab" data-bs-toggle="pill" data-bs-target="#pills-mri" type="button">
+                    <i class="fas fa-microscope me-2"></i>Image Analysis
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="pills-symptoms-tab" data-bs-toggle="pill" data-bs-target="#pills-symptoms" type="button">
+                    <i class="fas fa-notes-medical me-2"></i>Symptom Checks
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            
+            <div class="tab-pane fade show active" id="pills-mri">
+                <form action="{% url 'bulk_delete_mri' %}" method="POST" id="mri-delete-form">
+                    {% csrf_token %}
+                    <button type="submit" id="btn-mri-bulk" class="btn btn-danger btn-sm bulk-delete-btn" onclick="return confirm('Delete selected MRI records?')">
+                        <i class="fas fa-trash me-2"></i>Delete Selected
+                    </button>
+
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr class="text-muted small text-uppercase">
+                                        <th><input type="checkbox" id="select-all-mri"></th>
+                                        <th>Image</th>
+                                        <th>Date</th>
+                                        <th>Condition</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for record in mri_records %}
+                                    <tr>
+                                        <td><input type="checkbox" name="record_ids" value="{{ record.id }}" class="mri-checkbox"></td>
+                                        <td>
+                                            {% if record.image %}
+                                                <img src="{{ record.image.url }}" class="img-thumbnail-custom">
+                                            {% else %}
+                                                <i class="fas fa-image text-muted fa-2x"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ record.date|date:"d M, Y" }}</td>
+                                        <td><span class="fw-bold" style="color: var(--skin-primary) !important;">{{ record.predicted_disease }}</span></td>
+                                        <td>
+                                            <span class="badge {% if record.status == 'Accepted' %}bg-success{% elif record.status == 'Rejected' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                                                {{ record.status }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'download_pdf_mri' record.id %}" class="btn btn-action btn-outline-primary me-1"><i class="fas fa-download"></i></a>
+                                            <a href="{% url 'delete_mri' record.id %}" class="btn btn-action btn-outline-danger" onclick="return confirm('Delete record?')"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="6" class="text-center py-5">No MRI records found.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="pills-symptoms">
+                <form action="{% url 'bulk_delete_symptoms' %}" method="POST" id="symptom-delete-form">
+                    {% csrf_token %}
+                    <button type="submit" id="btn-sym-bulk" class="btn btn-danger btn-sm bulk-delete-btn" onclick="return confirm('Delete selected symptom checks?')">
+                        <i class="fas fa-trash me-2"></i>Delete Selected
+                    </button>
+
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr class="text-muted small text-uppercase">
+                                        <th><input type="checkbox" id="select-all-sym"></th>
+                                        <th>Date</th>
+                                        <th>Result</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for record in symptom_records %}
+                                    <tr>
+                                        <td><input type="checkbox" name="record_ids" value="{{ record.id }}" class="sym-checkbox"></td>
+                                        <td>{{ record.date|date:"d M, Y" }}</td>
+                                        <td><span class="badge" style="background-color: var(--skin-primary);">{{ record.predicted_disease }}</span></td>
+                                        <td>
+                                            <span class="badge {% if record.status == 'Accepted' %}bg-success{% elif record.status == 'Rejected' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                                                {{ record.status|default:"Pending" }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'download_pdf' record.id %}" class="btn btn-action btn-outline-primary me-1"><i class="fas fa-file-download"></i></a>
+                                            <a href="{% url 'delete_symptom' record.id %}" class="btn btn-action btn-outline-danger" onclick="return confirm('Delete report?')"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="5" class="text-center py-5">No symptom reports found.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function setupBulkDelete(selectAllId, checkboxClass, buttonId) {
+        const selectAll = document.getElementById(selectAllId);
+        const checkboxes = document.querySelectorAll('.' + checkboxClass);
+        const deleteBtn = document.getElementById(buttonId);
+
+        if (!selectAll) return;
+
+        selectAll.addEventListener('change', function() {
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            toggleBtn();
+        });
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', toggleBtn);
+        });
+
+        function toggleBtn() {
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            deleteBtn.style.display = anyChecked ? 'inline-block' : 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setupBulkDelete('select-all-mri', 'mri-checkbox', 'btn-mri-bulk');
+        setupBulkDelete('select-all-sym', 'sym-checkbox', 'btn-sym-bulk');
+    });
+</script>
+{% endblock %}

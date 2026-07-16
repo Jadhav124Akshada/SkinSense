@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Details</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+      max-width: 850px;
+    }
+
+    .card {
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin-top: 40px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      color: #2c3e50;
+      font-weight: 700;
+    }
+
+    .section-title p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+    }
+
+    h4 {
+      color: #34495e;
+      font-weight: 600;
+      border-bottom: 2px solid #44bd32;
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    .info-row {
+      background-color: #f7f9fa;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+    }
+
+    .info-row strong {
+      color: #2c3e50;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: #2c3e50;
+    }
+
+    .btn-custom {
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: 600;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .btn-success {
+      background-color: #44bd32;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #2f9e1f;
+    }
+
+    .btn-primary {
+      background-color: #273c75;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #1b273f;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 30px;
+    }
+
+    @media print {
+      .btn-container {
+        display: none;
+      }
+
+      body {
+        background-color: #fff;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="section-title">
+      <h2>MRI Report Analysis</h2>
+      <p>Appointment & Diagnosis Summary</p>
+    </div>
+
+    <div class="card">
+
+      <h4>Patient Information</h4>
+      <div class="row info-row">
+        <div class="col-md-6"><strong>Name:</strong> {{ patient.fname }} {{ patient.lname }}</div>
+        <div class="col-md-3"><strong>Age:</strong> {{ patient.age }}</div>
+        <div class="col-md-3"><strong>Contact:</strong> {{ patient.mobile }}</div>
+      </div>
+
+      <h4>Predicted Disease</h4>
+      <div class="info-row">
+        <strong>{{ patient.predicted_disease }}</strong>
+      </div>
+
+      {% if patient.doctor %}
+      <h4>Booked Doctor</h4>
+      <div class="row info-row">
+        <div class="col-md-6"><strong>Name:</strong> Dr. {{ patient.doctor.user.first_name }} {{ patient.doctor.user.last_name }}</div>
+        <div class="col-md-3"><strong>Specialization:</strong> {{ patient.doctor.specialization }}</div>
+        <div class="col-md-3"><strong>Location:</strong> {{ patient.doctor.location }}</div>
+      </div>
+      {% endif %}
+
+      {% if precautions %}
+      <h4>Precautions</h4>
+      <div class="info-row">
+        <ul>
+          {% for precaution in precautions %}
+          <li>{{ precaution }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="btn-container">
+        <a href="{% url 'download_pdf_mri' patient.id %}" class="btn btn-success btn-custom">Download PDF</a>
+        <a href="{% url 'mri' %}" class="btn btn-primary btn-custom">Go to Dashboard</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

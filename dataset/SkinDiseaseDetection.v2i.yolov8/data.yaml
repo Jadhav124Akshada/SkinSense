@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 14
+names: ['Acne', 'Actinic Keratosis', 'Basal Cell Carcinoma', 'Chickenpox', 'Dermato Fibroma', 'Melanoma', 'Nail Fungus', 'Nevus', 'Normal Skin', 'Pigmented Benign Keratosis', 'Ringworm', 'Seborrheic Keratosis', 'Squamous Cell Carcinoma', 'Vascular Lesion']
+
+roboflow:
+  workspace: retinal-zgazy
+  project: skindiseasedetection-pjyyl
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/retinal-zgazy/skindiseasedetection-pjyyl/dataset/2

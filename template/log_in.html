@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+
+<!-- Find A Doctor Section -->
+<section id="find-a-doctor" class="find-a-doctor section" style="margin-top: 30px;">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up" style="margin-top: 30px;">
+    <h2>Login Here</h2>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-5">
+        <div class="search-container">
+          <form class="search-form" method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-12">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
+              </div>
+              <div class="col-md-12">
+                <input type="password" class="form-control" name="password" id="password"
+                  placeholder="Enter Your Password">
+              </div>
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary w-100">Login Here
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section><!-- /Find A Doctor Section -->
+
+<!-- Intro Screen (appears only once per session) -->
+<div id="intro-screen" style="display:none;">
+    <img src="{% static 'assets/img/sb-3.png' %}" class="intro-logo" alt="Logo">
+</div>
+
+<style>
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
+    opacity: 1;
+    transition: opacity 0.8s ease-out;
+}
+
+.intro-logo {
+    width: 1000px;
+    height: auto;
+    animation: zoomIn 1.2s ease-out;
+}
+
+@keyframes zoomIn {
+    0% { opacity: 0; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1); }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Only show intro screen if not already shown in this session
+    if (!sessionStorage.getItem("introShown")) {
+        const intro = document.getElementById("intro-screen");
+        intro.style.display = "flex";
+
+        setTimeout(() => {
+            intro.style.opacity = "0";     // fade-out
+            setTimeout(() => intro.remove(), 800); // remove fully
+        }, 2000); // 2 seconds
+
+        sessionStorage.setItem("introShown", "true"); // mark as shown
+    }
+});
+</script>
+
+{% endblock body %}

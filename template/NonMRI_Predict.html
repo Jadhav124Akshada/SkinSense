@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block body %}
+
+<section id="find-a-doctor" class="find-a-doctor section">
+
+  <div class="container section-title mt-5" data-aos="fade-up">
+    <h2>Symptom Analysis Result</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-12">
+        <div class="search-container">
+
+          <div class="row g-3">
+            <h4 style="text-transform: uppercase;">Patient Info :</h4>
+            <div class="col-6">
+              <input type="text" class="form-control" value="{{ patient.first_name }}" readonly>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" value="{{ patient.last_name }}" readonly>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" value="{{ patient.age }}" readonly>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" value="{{ patient.contact }}" readonly>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-3">
+            <h4 style="text-transform: uppercase;">Diagnosis :</h4>
+            <div class="col-12">
+              <label class="mb-1 text-muted">Predicted Disease</label>
+              <input type="text" class="form-control" value="{{ patient.predicted_disease }}" readonly
+                style="font-weight: bold; color: #dc9b7d;">
+            </div>
+          </div>
+
+          <div class="row g-3 mt-3">
+            <h4 style="text-transform: uppercase;">Reported Symptoms :</h4>
+            <div class="col-12">
+              <ul class="service-features">
+                {% if reported_symptoms %}
+                {% for sym in reported_symptoms %}
+                <li><i class="bi bi-check-circle"></i> {{ sym }}</li>
+                {% endfor %}
+                {% else %}
+                <li>No specific symptoms recorded.</li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-3">
+            <h4 style="text-transform: uppercase;">Suggested Doctors :</h4>
+            {% if doctors %}
+            {% for doc in doctors %}
+          <div class="col-12 mb-4 p-3" style="border: 1px solid var(--border-color); border-radius: 10px; background: #fff;">
+              
+             <div class="mb-1">
+    <h5 class="mb-0" style="color: var(--skin-dark);">
+        <strong>{{ doc.name }}</strong>
+        <span class="ms-1 text-muted" style="font-size: 1px;">({{ doc.specialization }})</span>
+    </h5>
+</div>
+
+              <div class="mb-2">
+                <i class="bi bi-geo-alt-fill text-success me-1"></i>
+                <span class="text-dark">{{ doc.location }}</span>
+              </div>
+
+              <div class="mt-2 mb-1">
+                <span class="text-muted small"><i class="bi bi-telephone-fill text-success me-1"></i> <strong></strong>
+                  {{ doc.contact|default:"N/A" }}</span>
+              </div>
+
+              <div class="d-flex gap-2">
+                <form method="post" action="{% url 'book_appointment' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="patient_id" value="{{ patient.id }}">
+                  <input type="hidden" name="doctor_email" value="{{ doc.email }}">
+                  <button type="submit" class="btn btn-primary btn-sm mt-2">Book Appointment</button>
+                </form>
+
+                <a href="https://www.google.com/maps/search/?api=1&query={{ doc.location|urlencode }}" target="_blank"
+                  class="btn btn-outline-success btn-sm mt-2">
+                  <i class="bi bi-geo-alt-fill"></i> View on Map
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No doctor suggestions available.</p>
+            {% endif %}
+          </div>
+
+          <div class="row g-3 mt-3">
+            <h4 style="text-transform: uppercase;">Precautions :</h4>
+            <div class="col-12">
+              <ul class="service-features">
+                {% for precaution in precautions %}
+                <li><i class="bi bi-shield-check"></i> {{ precaution }}</li>
+                {% empty %}
+                <li>No specific precautions available.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          {% if products %}
+          <div class="row g-3 mt-3">
+            <h4 style="text-transform: uppercase;">Suggested Products :</h4>
+            <div class="col-12">
+              <div class="card p-3" style="border: 1px solid #ddd; background-color: #f9f9f9;">
+                <ul class="service-features" style="list-style: none; padding-left: 0;">
+                  {% for prod in products %}
+                  <li style="margin-bottom: 10px;">
+                    <i class="bi bi-bag-plus" style="color: #44bd32;"></i>
+                    {% if prod.link %}
+                    <a href="{{ prod.link }}" target="_blank"
+                      style="text-decoration: none; color: #333; font-weight: 500;">
+                      {{ prod.name }} <i class="fas fa-external-link-alt" style="font-size: 12px; color: #888;"></i>
+                    </a>
+                    {% else %}
+                    {{ prod }}
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="text-center mt-4 mb-5">
+  <a href="{% url 'download_pdf' patient.id %}" class="btn btn-success btn-lg">
+    Download Report
+  </a>
+</div>
+
+{% endblock body %}

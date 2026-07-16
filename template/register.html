@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <!-- Find A Doctor Section -->
+    <section id="find-a-doctor" class="find-a-doctor section" style="margin-top: 30px;">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up" style="margin-top: 30px;">
+        <h2>Register Here</h2>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-5">
+            <div class="search-container">
+              <form class="search-form" method="post" >
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="fname" id="fname" placeholder="Enter First Name">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="email" class="form-control" name="username" id="username" placeholder="Enter Email Address">
+                  </div>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your Password">
+                  </div>
+                  <div class="col-md-12">
+                    <input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="Enter Confirm Password">
+                  </div>
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary w-100">Register Here
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Find A Doctor Section -->
+{% endblock body %}

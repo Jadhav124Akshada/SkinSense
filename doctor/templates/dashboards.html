@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Doctor's Dashboard - SkinSense</title>
+    
+    <script>
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.documentElement.classList.add("dark-mode");
+        }
+    </script>
+
+    <link href="{% static 'assets/img/file.svg' %}" rel="icon">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+    <style>
+        /* [KEEPING EXISTING STYLES] */
+        :root {
+            --skin-primary:#dc9b7d;
+            --skin-dark: #c48b6f;
+            --skin-light: #e8b49c;
+            --text-dark: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #eeeeee;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-dark: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', sans-serif; }
+
+        body.dark-mode .topbar,
+        body.dark-mode .card,
+        body.dark-mode .stats-card,
+        body.dark-mode .card-header,
+        body.dark-mode footer {
+            background-color: var(--card-bg) !important;
+            color: var(--text-dark) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        body.dark-mode .text-gray-800 { color: var(--text-dark) !important; }
+
+        .user-initial-circle {
+            width: 45px;
+            height: 45px;
+            background-color: var(--skin-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid #fff;
+        }
+        .user-initial-circle:hover {
+            transform: scale(1.05);
+            background-color: var(--skin-dark);
+        }
+        .hide-caret::after { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0; 
+        }
+
+        #wrapper { display: flex; width: 100%; }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--skin-primary) 0%, var(--skin-dark) 100%);
+            min-height: 100vh;
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 20px 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand:hover {
+            text-decoration: none;
+            color: white;
+        }
+
+        .sidebar-brand-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 500;
+            border-left: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover, .sidebar .nav-item.active .nav-link {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 5px solid white;
+            padding-left: 30px;
+            color: white;
+        }
+
+        .sidebar .nav-link i { margin-right: 10px; width: 20px; text-align: center; }
+
+        .sidebar-image-container {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-image-container img {
+            width: 70%;
+            opacity: 0.9;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        #content-wrapper { flex: 1; display: flex; flex-direction: column; }
+        #content { flex: 1; padding: 30px; }
+
+        .topbar {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats-card {
+            border: none;
+            border-radius: 20px;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%; 
+            min-height: 180px; 
+            overflow: hidden;
+            position: relative;
+            display: flex;       
+            align-items: center; 
+            justify-content: center; 
+            text-align: center;       
+        }
+
+        .stats-card .card-body {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(220, 155, 125, 0.2);
+        }
+
+        .stats-card .text-xs {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stats-card .h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+        }
+
+        .stats-card i {
+            margin-top: 15px;
+            opacity: 0.2;
+        }
+
+        .border-left-skin { border-left: 8px solid #17a2b8; }
+        .border-left-success { border-left: 8px solid #28a745; }
+        .border-left-warning { border-left: 8px solid #ffc107; }
+        .border-left-info { border-left: 8px solid #d36055; }
+
+        .text-skin { color: var(--skin-dark) !important; }
+
+        .card-table {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            background-color: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 20px 25px;
+        }
+
+        .card-header h6 {
+            color: var(--skin-dark);
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table thead {
+            background-color: var(--skin-primary);
+            color: white;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(220, 155, 125, 0.1);
+            transform: scale(1.005);
+            transition: 0.2s;
+        }
+
+        .btn-action {
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            margin: 0 3px;
+        }
+        
+        .btn-action:hover { transform: scale(1.2); }
+
+        /* --- NEW SEARCH BAR STYLES --- */
+        .search-wrapper {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+        .search-input {
+            border-radius: 10px 0 0 10px !important;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+        }
+        .search-btn {
+            border-radius: 0 10px 10px 0 !important;
+            background-color: var(--skin-primary);
+            border: none;
+            padding: 10px 25px;
+            color: white;
+        }
+        .search-btn:hover { background-color: var(--skin-dark); }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav sidebar" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center mb-4 mt-3" href="{% url 'dashboards' %}">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="sidebar-brand-text">SkinSense <sup>Doc</sup></div>
+            </a>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'dashboards' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <div class="sidebar-image-container d-none d-md-block">
+                <img src="{% static 'assets/img/sb-3.png' %}" alt="SkinSense Logo">
+                <p class="mt-2 small text-white-50">Secure Portal</p>
+            </div>
+        </ul>
+
+        <div id="content-wrapper">
+            <div id="content">
+
+                <nav class="topbar animate-in" style="animation-delay: 0.1s; position: relative; z-index: 1001;">
+                    <div class="d-flex align-items-center">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3 text-skin">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <h4 class="mb-0 text-gray-800">Welcome, <span class="text-skin">Dr. {{ doctor.user.first_name }}</span></h4>
+                    </div>
+
+                    <div class="dropdown me-2">
+                        <button class="btn d-flex align-items-center border-0 bg-transparent dropdown-toggle hide-caret" 
+                                type="button" 
+                                id="userDropdown" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false">
+                            <div class="user-initial-circle">
+                                {{ doctor.user.first_name.0|upper }}
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userDropdown">
+                            <li><h6 class="dropdown-header">Manage Profile</h6></li>
+                            <li>
+                                <a class="dropdown-item py-2" href="{% url 'doctor_account' %}">
+                                    <i class="fas fa-id-card me-2 text-muted"></i> Account
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2" href="{% url 'doctor_settings' %}">
+                                    <i class="fas fa-cog me-2 text-muted"></i> Settings
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item py-2 text-danger fw-bold" href="{% url 'doctor_logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="container-fluid p-0">
+                    {% block dashboard_content %}
+                    <div class="row animate-in" style="animation-delay: 0.15s;">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <div class="search-wrapper">
+                                <form method="GET" action="{% url 'dashboards' %}" class="input-group">
+                                    <input type="text" name="q" class="form-control search-input" placeholder="Search patient by name or ID..." value="{{ query|default:'' }}">
+                                    <button class="btn search-btn" type="submit">
+                                        <i class="fas fa-search me-2"></i> Search
+                                    </button>
+                                    {% if query %}
+                                        <a href="{% url 'dashboards' %}" class="btn btn-outline-secondary d-flex align-items-center ms-2 rounded-3">Clear</a>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4 animate-in" style="animation-delay: 0.2s;">
+                            <div class="stats-card border-left-skin">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-skin text-uppercase">Total Patients</div>
+                                    <div class="h3 font-weight-bold text-gray-800">{{ total_patients }}</div>
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4 animate-in" style="animation-delay: 0.3s;">
+                            <div class="stats-card border-left-warning">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase">Pending</div>
+                                    <div class="h3 font-weight-bold text-gray-800">{{ pending_count }}</div>
+                                    <i class="fas fa-hourglass-half fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4 animate-in" style="animation-delay: 0.4s;">
+                            <div class="stats-card border-left-success">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase">Accepted</div>
+                                    <div class="h3 font-weight-bold text-gray-800">{{ accepted_count }}</div>
+                                    <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4 animate-in" style="animation-delay: 0.5s;">
+                            <div class="stats-card border-left-info">
+                                <div class="card-body">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase">Rejected</div>
+                                    <div class="h3 font-weight-bold text-gray-800">{{ rejected_count }}</div>
+                                    <i class="fas fa-times-circle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if query %}
+                    <div class="mb-3 animate-in" style="animation-delay: 0.55s;">
+                        <p class="text-muted">Search results for: <strong>"{{ query }}"</strong></p>
+                    </div>
+                    {% endif %}
+
+                    <div class="card card-table animate-in" style="animation-delay: 0.6s;">
+                        <div class="card-header">
+                            <h6><i class="fas fa-notes-medical me-2"></i> Skin Disease Patients</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Patient Name</th>
+                                            <th>Age</th>
+                                            <th>Diagnosis</th>
+                                            <th>Date</th> <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for patient in skin_patients %}
+                                        <tr>
+                                            <td class="fw-bold">#{{ patient.id }}</td>
+                                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                                            <td>{{ patient.age }}</td>
+                                            <td><span class="badge bg-secondary rounded-pill" style="background-color: var(--skin-dark) !important;">{{ patient.predicted_disease }}</span></td>
+                                            <td>{{ patient.date|date:"M d, Y" }}</td> <td>
+                                                {% if patient.status == "Accepted" %}<span class="badge bg-success">Accepted</span>
+                                                {% elif patient.status == "Rejected" %}<span class="badge bg-danger">Rejected</span>
+                                                {% else %}<span class="badge bg-warning text-dark">Pending</span>{% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'doctor_patient_detail' patient.id %}" class="btn btn-info btn-action" title="View"><i class="fas fa-eye"></i></a>
+                                                <a href="{% url 'download_pdf' patient.id %}" class="btn btn-dark btn-action" title="PDF"><i class="fas fa-file-pdf"></i></a>
+                                                <form method="POST" style="display:inline;">{% csrf_token %}<input type="hidden" name="patient_id" value="{{ patient.id }}"><input type="hidden" name="patient_type" value="skin"><input type="hidden" name="action" value="accept"><button type="submit" class="btn btn-success btn-action"><i class="fas fa-check"></i></button></form>
+                                                <form method="POST" style="display:inline;">{% csrf_token %}<input type="hidden" name="patient_id" value="{{ patient.id }}"><input type="hidden" name="patient_type" value="skin"><input type="hidden" name="action" value="reject"><button type="submit" class="btn btn-danger btn-action"><i class="fas fa-times"></i></button></form>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr><td colspan="7" class="text-center p-4 text-muted">No skin patients found.</td></tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table animate-in" style="animation-delay: 0.7s;">
+                        <div class="card-header"><h6><i class="fas fa-x-ray me-2"></i> Image Analysis Patients</h6></div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Patient Name</th>
+                                            <th>Age</th>
+                                            <th>Diagnosis</th>
+                                            <th>Date</th> <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for patient in mri_patients %}
+                                        <tr>
+                                            <td class="fw-bold">#{{ patient.id }}</td>
+                                            <td>{{ patient.fname }} {{ patient.lname }}</td>
+                                            <td>{{ patient.age }}</td>
+                                            <td><span class="badge bg-secondary rounded-pill" style="background-color: var(--skin-dark) !important;">{{ patient.predicted_disease }}</span></td>
+                                            <td>{{ patient.created_at|date:"M d, Y" }}</td> <td>
+                                                {% if patient.status == "Accepted" %}<span class="badge bg-success">Accepted</span>
+                                                {% elif patient.status == "Rejected" %}<span class="badge bg-danger">Rejected</span>
+                                                {% else %}<span class="badge bg-warning text-dark">Pending</span>{% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'doctor_mri_detail' patient.id %}" class="btn btn-info btn-action" title="View"><i class="fas fa-eye"></i></a>
+                                                <a href="{% url 'download_pdf_mri' patient.id %}" class="btn btn-dark btn-action" title="PDF"><i class="fas fa-file-pdf"></i></a>
+                                                <form method="POST" style="display:inline;">{% csrf_token %}<input type="hidden" name="patient_id" value="{{ patient.id }}"><input type="hidden" name="patient_type" value="mri"><input type="hidden" name="action" value="accept"><button type="submit" class="btn btn-success btn-action"><i class="fas fa-check"></i></button></form>
+                                                <form method="POST" style="display:inline;">{% csrf_token %}<input type="hidden" name="patient_id" value="{{ patient.id }}"><input type="hidden" name="patient_type" value="mri"><input type="hidden" name="action" value="reject"><button type="submit" class="btn btn-danger btn-action"><i class="fas fa-times"></i></button></form>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr><td colspan="7" class="text-center p-4 text-muted">No skin patients found.</td></tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock %}
+                </div>
+
+            </div>
+            
+            <footer class="text-center py-4 bg-white" style="border-top: 1px solid #f0f0f0;">
+                <div class="container">
+                    <span class="text-muted small">Copyright &copy; SkinSense Doctor's Portal 2026</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("darkMode") === "enabled") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
+     
+</body>
+</html>

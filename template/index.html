@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+{% load static %} {% block body %}
+
+<section id="hero" class="hero section dark-background">
+  <div class="container-fluid p-0">
+    <div class="hero-wrapper">
+      <div class="hero-image">
+        <img src="{% static 'assets/img/d-4.png' %}" alt="Skin Disease Detection" class="img-fluid">
+      </div>
+
+       <div class="hero-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-md-10" data-aos="fade-right" data-aos-delay="100">
+          <div class="content-box">
+            <span class="badge-accent" data-aos="fade-up" data-aos-delay="150">AI-Powered Skin Analysis</span>
+            
+            <h1 data-aos="fade-up" data-aos-delay="200" style="color:whitesmoke !important;">
+                Early Detection of Skin Problems with Smart Technology
+            </h1>
+            
+            <p data-aos="fade-up" data-aos-delay="250" style="color:white; opacity: 0.9;">
+              Our intelligent system uses advanced AI to analyze skin images for patches, rashes, or unusual spots.
+              It helps in identifying potential skin conditions at an early stage and provides useful insights.
+            </p>
+
+                <div class="info-badges" data-aos="fade-up" data-aos-delay="350">
+                  <div class="badge-item">
+                     <i class="bi bi-aspect-ratio mt-2" style="font-size: 40px;"></i>
+                    <div class="badge-content">
+                      <span>Ready to Start?</span>
+                      <a href="{% url 'mid' %}" class="btn badge-accent btn-lg px-4 py-2" style="border-radius: 7px; font-weight: 700; text-decoration: none; color: #fff;">
+                        Proceed to Scan
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="features-wrapper">
+            <div class="row gy-4">
+              <div class="col-lg-4">
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="450">
+                  <div class="feature-icon"><i class="bi bi-cpu-fill"></i></div>
+                  <div class="feature-text">
+                    <h3>AI Skin Scan</h3>
+                    <p>Advanced deep learning models analyze skin images to detect common skin diseases with accuracy.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="500">
+                  <div class="feature-icon"><i class="bi bi-person-badge-fill"></i></div>
+                  <div class="feature-text">
+                    <h3>Dermatologist Support</h3>
+                    <p>Access expert dermatologist opinions and professional guidance for reliable healthcare support.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="550">
+                  <div class="feature-icon"><i class="bi bi-file-earmark-check-fill"></i></div>
+                  <div class="feature-text">
+                    <h3>Detailed Reports</h3>
+                    <p>Receive insights about potential skin issues, possible causes, and suggested medical actions.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how-system-works" class="section" style="padding: 60px 0; background-color: #fff;">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>How the System Works</h2>
+    </div>
+    <div class="row gy-4">
+      <div class="col-lg-5">
+        <div class="header-card-custom h-100 d-flex flex-column justify-content-center align-items-center text-center p-5 border">
+          <h2 style="font-weight: 700; font-size: 2.5rem;">Smart Skin Analysis</h2>
+          <h4 style="color: #555; margin-bottom: 20px;">3 Easy Steps</h4>
+          <p class="text-muted mb-4">
+            See your skin's health in minutes. Our AI looks at your skin surface and deep layers to give you the best routine.
+          </p>
+          <a href="{% url 'mid' %}" class="btn btn-dark px-5 py-3 fw-bold" style="border-radius: 0;">Start Now</a>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="step-card-horizontal mb-4" data-aos="fade-left" data-aos-delay="100">
+          <div class="row g-0 bg-light">
+            <div class="col-md-5">
+              <img src="{% static 'assets/img/step 1.png' %}" class="img-fluid h-100 w-100 object-fit-cover" alt="Upload">
+            </div>
+            <div class="col-md-7 p-4">
+              <span class="text-uppercase text-secondary small">Step 1</span>
+              <h4 class="fw-bold">Upload Your Scan</h4>
+              <p class="small text-muted mb-0">Non MRI (surface) or MRI (deep layers) analysis options available.</p>
+            </div>
+          </div>
+        </div>
+        <div class="step-card-horizontal mb-4" data-aos="fade-left" data-aos-delay="200">
+          <div class="row g-0 bg-light">
+            <div class="col-md-5">
+              <img src="{% static 'assets/img/step2.jpg' %}" class="img-fluid h-100 w-100 object-fit-cover" alt="AI Thinking">
+            </div>
+            <div class="col-md-7 p-4">
+              <span class="text-uppercase text-secondary small">Step 2</span>
+              <h4 class="fw-bold">The AI Analysis</h4>
+              <p class="small text-muted mb-0">Our smart "AI Brain" scans every detail of the image to find problems.</p>
+            </div>
+          </div>
+        </div>
+        <div class="step-card-horizontal" data-aos="fade-left" data-aos-delay="300">
+          <div class="row g-0 bg-light">
+            <div class="col-md-5">
+              <img src="{% static 'assets/img/step3.jpg' %}" class="img-fluid h-100 w-100 object-fit-cover" alt="Results">
+            </div>
+            <div class="col-md-7 p-4">
+              <span class="text-uppercase text-secondary small">Step 3</span>
+              <h4 class="fw-bold">Results & Plan</h4>
+              <p class="small text-muted mb-0">Get a simple report identifying the disease and a personalized plan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diseases" class="featured-departments section light-background">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Diseases We Detect</h2>
+      <p>Our AI model is trained to identify the following skin conditions.</p>
+    </div>
+    
+    <div class="row gy-4">
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/Acne.jpg' %}" alt="Acne" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Acne</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/Actinic_Keratosis.png' %}" alt="Actinic Keratosis" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Actinic Keratosis</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/basal_cell_carcinoma.png' %}" alt="Basal Cell Carcinoma" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Basal Cell Carcinoma</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/chickenpox.jpg' %}" alt="Chickenpox" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Chickenpox</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/dermato_fibroma.png' %}" alt="Dermato Fibroma" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Dermato Fibroma</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/dyshidrotic_eczema.png' %}" alt="Dyshidrotic Eczema" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Dyshidrotic Eczema</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/melanoma.png' %}" alt="Melanoma" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Melanoma</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/nail_fungus.png' %}" alt="Nail Fungus" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Nail Fungus</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/nevus.png' %}" alt="Nevus" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Nevus</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/normal_skin.png' %}" alt="Normal Skin" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Normal Skin</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/pigmented_benign_keratosis.jpg' %}" alt="Pigmented Benign Keratosis" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Pigmented Benign Keratosis</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/ringworm.jpeg' %}" alt="Ringworm" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Ringworm</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/seborrheic_keratosis.jpg' %}" alt="Seborrheic Keratosis" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Seborrheic Keratosis</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/squamous_cell_carcinoma.jpg' %}" alt="Squamous Cell Carcinoma" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Squamous Cell Carcinoma</h3>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="department-card w-100">
+              <div class="department-image">
+                  <img src="{% static 'assets/img/diseases/vascular_lesion.jpg' %}" alt="Vascular Lesion" class="img-fluid">
+              </div>
+              <div class="department-content text-center">
+                  <h3>Vascular Lesion</h3>
+              </div>
+          </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+{% endblock body %}

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %} {% block body %}
+<div class="page-title" data-aos="fade">
+  <div class="heading">
+    <div class="container text-center">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h1><b>About Us</b></h1>
+          <p class="mb-0">Combining Artificial Intelligence with Dermatology for a healthier future.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center gy-4">
+      
+      <div class="col-lg-10" data-aos="fade-up">
+        <div class="card p-4 shadow-sm border-0">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
+              <h3 style="color: var(--heading-color);">Our System</h3>
+              <p>
+                The <b>SkinSense - Skin Disease Detection</b> system utilizes state-of-the-art Deep Learning models to analyze skin lesions with high precision. 
+                By processing images uploaded by users, our system can identify a wide range of conditions—from Acne to Melanoma—providing 
+                instant, preliminary insights into skin health to encourage timely medical consultation.
+              </p>
+              <div class="row gy-2">
+                <div class="col-md-6">
+                    <i class="bi bi-cpu-fill me-2" style="color: var(--accent-color);"></i> <span>Automated Image Analysis</span>
+                </div>
+                <div class="col-md-6">
+                    <i class="bi bi-shield-lock-fill me-2" style="color: var(--accent-color);"></i> <span>Secure Data Processing</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 text-center">
+              <img src="{% static 'assets/img/health/dermatology-3.webp' %}" alt="System" class="img-fluid rounded shadow-sm">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+        <div class="card p-4 shadow-sm border-0" style="background-color: var(--background-color);">
+          <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-7">
+              <h3 style="color: var(--heading-color);">Our Mission</h3>
+              <p>
+                The mission of <b>SkinSense</b> is to bridge the gap between advanced technology and healthcare accessibility. 
+                We aim to empower individuals by providing a reliable tool for early detection, which is critical in successfully treating serious skin conditions.
+              </p>
+              <ul class="list-unstyled">
+                <li><i class="bi bi-check-circle-fill me-2" style="color: var(--accent-color);"></i> Accessible early screening for all users.</li>
+                <li><i class="bi bi-check-circle-fill me-2" style="color: var(--accent-color);"></i> Reducing the time between symptom onset and consultation.</li>
+                <li><i class="bi bi-check-circle-fill me-2" style="color: var(--accent-color);"></i> Supporting dermatologists with AI-driven insights.</li>
+              </ul>
+            </div>
+            <div class="col-lg-5 text-center">
+               <i class="bi bi-rocket-takeoff" style="font-size: 5rem; color: var(--accent-color);"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-10" data-aos="fade-up" data-aos-delay="200">
+        <div class="card p-4 shadow-sm border-0">
+          <h3 class="mb-4 text-center" style="color: var(--heading-color);">Our Team</h3>
+          <p class="text-center mb-5">
+            The team behind <b>SkinSense</b> consists of AI experts and medical professionals working together to 
+            improve digital healthcare.
+          </p>
+           <div class="row gy-4 text-center">
+
+  <div class="col-md-4">
+    <div class="team-member">
+      <img src="{% static 'assets/img/person/person-f-10.webp' %}" alt="Frontend Developer" class="img-fluid rounded-circle mb-3 shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+      <h5>Frontend Developer</h5>
+      <p class="small text-muted">UI/UX & User Interface</p>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="team-member">
+      <img src="{% static 'assets/img/person/person-m-7.webp' %}" alt="Backend Developer" class="img-fluid rounded-circle mb-3 shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+      <h5>Backend Developer</h5>
+      <p class="small text-muted">API & System Logic</p>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="team-member">
+      <img src="{% static 'assets/img/person/person-f-11.webp' %}" alt="Database Administrator" class="img-fluid rounded-circle mb-3 shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+      <h5>Database Administrator</h5>
+      <p class="small text-muted">Cloud Storage & Security</p>
+    </div>
+  </div>
+
+  <div class="col-md-4 mx-auto">
+    <div class="team-member">
+      <img src="{% static 'assets/img/person/person-m-12.webp' %}" alt="ML Engineer" class="img-fluid rounded-circle mb-3 shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+      <h5>ML Engineer</h5>
+      <p class="small text-muted">Model Training & Dataset</p>
+    </div>
+  </div>
+
+</div>
+            
+          <div class="text-center mt-5">
+            <a href="{% url 'contact' %}" class="btn btn-getstarted" style="background: var(--accent-color); color: var(--contrast-color); padding: 10px 30px; border-radius: 50px;">Get in Touch with Us</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock body %}

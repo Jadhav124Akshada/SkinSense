@@ -1,0 +1,45 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container" style="margin-top: 100px; margin-bottom: 80px;">
+  <div class="card shadow rounded-4 border-0">
+    <div class="card-header text-white p-4" style="background: linear-gradient(180deg, #17a2b8 0%, #138496 100%);">
+      <h3 class="mb-0"><i class="fas fa-x-ray me-2"></i> Patient Details (MRI Scan)</h3>
+    </div>
+    
+    <div class="card-body p-5">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h5 class="text-muted">Personal Information</h5>
+          <p class="fs-5"><strong>Name:</strong> {{ patient.fname }} {{ patient.lname }}</p>
+          <p class="fs-5"><strong>Age:</strong> {{ patient.age }}</p>
+          <p class="fs-5"><strong>Contact:</strong> {{ patient.mobile }}</p>
+        </div>
+        
+        <div class="col-md-6 text-md-end">
+          <h5 class="text-muted">AI Analysis Result</h5>
+          <h2 class="text-info fw-bold">{{ patient.predicted_disease }}</h2>
+          <p class="text-muted">Date: {{ patient.date|date:"M d, Y" }}</p>
+        </div>
+      </div>
+
+      <hr>
+      
+      <div class="alert alert-info mt-4">
+        <i class="fas fa-info-circle me-2"></i> 
+        This result was generated via AI Analysis of an uploaded MRI image.
+      </div>
+
+      <div class="mt-5 d-flex gap-3">
+        <a href="{% url 'download_pdf_mri' patient.id %}" class="btn btn-dark btn-lg">
+          <i class="fas fa-file-pdf me-2"></i> Download Report
+        </a>
+        
+        <a href="{% url 'dashboards' %}" class="btn btn-outline-secondary btn-lg">Back to Dashboard</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock body %}

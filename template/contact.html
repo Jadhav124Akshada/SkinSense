@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="page-title" data-aos="fade">
+
+  <div class="container text-center">
+
+    <h1 style="color: var(--heading-color); font-weight: 700;">Contact Us</h1>
+
+    <p>Have questions or need support? Our team is here to help you.</p>
+
+  </div>
+
+</div>
+
+
+
+<section class="section">
+
+  <div class="container" data-aos="fade-up">
+
+    <div class="row gy-5">
+
+
+
+      <div class="col-lg-5">
+
+        <div class="info-container pe-lg-4">
+
+          <h3 class="fw-bold mb-4" style="color: var(--heading-color);"></h3>
+
+          
+
+          <div class="contact-card-impressive mb-4" data-aos="fade-right" data-aos-delay="100">
+
+            <div class="card-inner p-4 shadow-sm border-start border-4" style="border-left-color: var(--accent-color) !important; background: #fff;">
+
+              <div class="d-flex align-items-center mb-2">
+
+                <i class="bi bi-cloud-check-fill fs-3 me-3" style="color: var(--accent-color);"></i>
+
+                <h5 class="fw-bold mb-0">Virtual Headquarters</h5>
+
+              </div>
+
+              <div class="card-description">
+
+                <p class="small text-muted mb-0">Our system lives in the cloud, using remote power to process your data faster than a local clinic.</p>
+
+                <div class="hover-content mt-2">
+
+                  <span class="badge bg-light text-dark border">Status: Online</span>
+
+                  <span class="small text-muted ms-2">Secure & Encrypted</span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="contact-card-impressive mb-4" data-aos="fade-right" data-aos-delay="200">
+
+            <div class="card-inner p-4 shadow-sm border-start border-4" style="border-left-color: var(--accent-color) !important; background: #fff;">
+
+              <div class="d-flex align-items-center mb-2">
+
+                <i class="bi bi-headset fs-3 me-3" style="color: var(--accent-color);"></i>
+
+                <h5 class="fw-bold mb-0">Contact Support</h5>
+
+              </div>
+
+              <div class="card-description">
+
+                <p class="small text-muted mb-0">Our technical team provides digital assistance to help you navigate your results.</p>
+
+                <div class="hover-content mt-2">
+
+                  <span class="badge bg-light text-dark border">Email: support@skinsense.com</span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="contact-card-impressive" data-aos="fade-right" data-aos-delay="300">
+
+            <div class="card-inner p-4 shadow-sm border-start border-4" style="border-left-color: var(--accent-color) !important; background: #fff;">
+
+              <div class="d-flex align-items-center mb-2">
+
+                <i class="bi bi-globe-americas fs-3 me-3" style="color: var(--accent-color);"></i>
+
+                <h5 class="fw-bold mb-0">Global Ability</h5>
+
+              </div>
+
+              <div class="card-description">
+
+                <p class="small text-muted mb-0">Access instant 24/7 skin checks anywhere in the world, with zero borders.</p>
+
+                <div class="hover-content mt-2">
+
+                  <span class="badge bg-light text-dark border"></span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-7">
+        <div class="card p-4 p-md-5 shadow-lg border-0" style="border-radius: 20px; background: #ffffff;">
+          <h3 class="fw-bold mb-4" style="color: var(--heading-color);">Send a Message</h3>
+          
+          <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %} <div class="row gy-4">
+              <div class="col-md-6">
+                <label class="form-label small fw-bold">Your Name</label>
+                <input type="text" name="name" class="form-control p-3" placeholder="Full Name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-bold">Your Email</label>
+                <input type="email" name="email" class="form-control p-3" placeholder="email@example.com" required>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label small fw-bold">Subject</label>
+                <input type="text" name="subject" class="form-control p-3" placeholder="How can we help?" required>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label small fw-bold">Message</label>
+                <textarea name="message" class="form-control p-3" rows="6" placeholder="Describe your inquiry..." required></textarea>
+              </div>
+              
+              <div class="col-md-12 text-center">
+                <button type="submit" class="btn w-100" style="background: #dc9b7d; color: white; padding: 15px; font-weight: bold;">
+                  Send Inquiry
+                </button>
+              </div>
+            </div>
+          </form> 
+          </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Impressive Card Animations */
+  .contact-card-impressive {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+  }
+
+  .contact-card-impressive .card-inner {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  /* Slide and Glow Effect on Hover */
+  .contact-card-impressive:hover {
+    transform: translateX(15px);
+  }
+
+  .contact-card-impressive:hover .card-inner {
+    background-color: #fcfcfc !important;
+    box-shadow: 0 10px 25px rgba(222, 156, 124, 0.15) !important;
+  }
+
+  /* Reveal extra content on hover */
+  .hover-content {
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.4s ease;
+    overflow: hidden;
+  }
+
+  .contact-card-impressive:hover .hover-content {
+    opacity: 1;
+    max-height: 50px;
+    margin-top: 10px !important;
+  }
+
+  .contact-card-impressive .badge {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+  
+  .form-control:focus {
+    background: #fff !important;
+    border-color: var(--accent-color) !important;
+  }
+</style>
+{% endblock body %}

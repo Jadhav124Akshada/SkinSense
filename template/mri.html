@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block body %}
+
+<section id="featured-services" class="featured-services section light-background mt-5">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Skin Disease Detection</h2>
+    <p>Enter patient details and upload/capture MRI image for analysis</p>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+
+      <div class="col-lg-10 mx-auto" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card p-4">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Patient Info -->
+            <h4 class="mb-3">Patient Information</h4>
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <input type="text" class="form-control" name="patient_fname" placeholder="First Name" required>
+              </div>
+              <div class="col-6">
+                <input type="text" class="form-control" name="patient_lname" placeholder="Last Name" required>
+              </div>
+              <div class="col-6">
+                <input type="number" class="form-control" name="patient_age" placeholder="Age" required>
+              </div>
+              <div class="col-6">
+                <input type="text" class="form-control" name="patient_mob_no" placeholder="Mobile Number" required>
+              </div>
+            </div>
+
+            <hr>
+
+            <!-- Upload Section -->
+            <h4 class="mb-3">Upload MRI</h4>
+            <input type="file" name="image" accept="image/*" class="form-control mb-3">
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+              Upload & Predict <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <hr>
+
+            <!-- Camera Section -->
+          <h4 class="mb-3">Or Capture via Camera</h4>
+<video id="camera" autoplay playsinline class="w-100 rounded mb-3"
+       style="max-height: 500px; object-fit: cover; transform: scaleX(-1);"></video>
+<canvas id="canvas" class="d-none"></canvas>
+
+            <input type="hidden" name="image_data" id="image_data">
+
+            <button type="button" id="openCamera" class="btn btn-info w-100 mb-2">
+              Open Camera <i class="fas fa-camera"></i>
+            </button>
+            <button type="button" id="captureBtn" class="btn btn-warning w-100 mb-2 d-none">
+              Capture <i class="fas fa-dot-circle"></i>
+            </button>
+            <button type="submit" class="btn btn-success w-100 d-none" id="submitBtn">
+              Submit for Prediction <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</section>
+
+<script>
+  const video = document.getElementById("camera");
+  const canvas = document.getElementById("canvas");
+  const imageDataInput = document.getElementById("image_data");
+  const openCameraBtn = document.getElementById("openCamera");
+  const captureBtn = document.getElementById("captureBtn");
+  const submitBtn = document.getElementById("submitBtn");
+
+  let stream;
+
+  // Open camera
+  openCameraBtn.addEventListener("click", async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+      captureBtn.classList.remove("d-none");
+    } catch (err) {
+      alert("Camera not accessible: " + err);
+    }
+  });
+
+  // Capture image
+  captureBtn.addEventListener("click", () => {
+    const ctx = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    imageDataInput.value = canvas.toDataURL("image/png");
+
+    submitBtn.classList.remove("d-none");
+    alert("Image captured! Click Submit to upload.");
+  });
+</script>
+<script>
+  // Auto-hide status alert after 15 seconds (15000 ms)
+  setTimeout(() => {
+    const alertBox = document.getElementById("status-alert");
+    if (alertBox) {
+      alertBox.style.transition = "opacity 1s ease";
+      alertBox.style.opacity = "0";
+      setTimeout(() => alertBox.remove(), 1000); // remove after fade-out
+    }
+  }, 15000);
+</script>
+
+{% endblock body %}

@@ -1,0 +1,497 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SkinSense - Skin Disease Detection</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link href="{% static 'assets/img/file.svg' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. GLOBAL VARIABLES (Dark/Light Logic)
+           ========================================= */
+        :root {
+            /* Brand Colors (Stay same in both modes) */
+            --skin-primary: #dc9b7d;
+            --skin-secondary: #c48b6f;
+            
+            /* Light Mode Default Colors */
+            --bg-color: #ffffff;
+            --text-color: #444444;
+            --card-bg: #ffffff;
+            --input-bg: #f8f9fa;
+            --border-color: #eeeeee;
+            --chat-bg: #fdf6f3;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Dark Mode Override Colors */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --input-bg: #2d2d2d;
+            --border-color: #333333;
+            --chat-bg: #121212;
+            --shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Apply Variables */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Fix Bootstrap Elements for Dark Mode */
+        body.dark-mode .card, 
+        body.dark-mode .list-group-item, 
+        body.dark-mode .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+        
+        body.dark-mode .form-control {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        body.dark-mode .header {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 { color: var(--text-color) !important; }
+
+        /* --- 2. YOUR EXACT GOOGLE TRANSLATE CSS --- */
+        .translate-top-right {
+            position: absolute;
+            top: 17px;
+            right: 62px;
+            z-index: 1001;
+            width: 35px;
+            height: 35px;
+        }
+
+        .translate-icon {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            z-index: 1002;
+            pointer-events: none;
+        }
+
+        .goog-te-gadget { font-size: 0 !important; color: transparent !important; }
+        .goog-te-gadget span { display: none !important; }
+        .goog-te-banner-frame { display: none !important; }
+
+        .goog-te-combo {
+            background-color: #dc9b7d;
+            color: transparent;
+            border: 2px solid white;
+            padding: 0 !important;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .goog-te-combo:hover { background-color: #c48b6f; transform: scale(1.1); }
+        .goog-te-combo option { background-color: var(--bg-color); color: var(--text-color); padding: 8px; font-size: 13px; }
+
+        /* --- 3. GOOGLE STYLE PROFILE BUTTON --- */
+        .google-user-btn {
+            width: 35px;       
+            height: 35px;
+            background-color: #dc9b7d;
+            color: white;
+            border-radius: 50%;
+            display: flex;     
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;   
+            text-transform: uppercase;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .google-user-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* --- 4. DROPDOWN MENU (Adapted for Dark Mode) --- */
+        .navmenu .dropdown ul {
+            margin: 0;
+            padding: 5px 0;    
+            background: var(--card-bg); /* Use Variable */
+            display: block;
+            position: absolute;
+            visibility: hidden;
+            right: 0;          
+            top: 120%;         
+            opacity: 0;
+            transition: 0.2s;
+            border-radius: 8px;
+            z-index: 99;
+            box-shadow: var(--shadow); /* Use Variable */
+            min-width: 110px;
+            border: 1px solid var(--border-color);
+        }
+        .navmenu .dropdown ul li { min-width: 100%; }
+        .navmenu .dropdown ul a {
+            padding: 8px 15px; 
+            font-size: 13px;   
+            color: var(--text-color); /* Use Variable */
+            display: flex;
+            align-items: center;
+        }
+        .navmenu .dropdown ul a i {
+            font-size: 12px;
+            margin-right: 6px;
+            width: 14px;       
+            text-align: center;
+        }
+        .navmenu .dropdown ul a:hover {
+            background-color: var(--input-bg);
+            color: #dc9b7d;
+        }
+        .navmenu .dropdown:hover > ul {
+            opacity: 1;
+            top: 100%;
+            visibility: visible;
+        }
+
+        /* --- 5. CHATBOT CSS (Adapted for Dark Mode) --- */
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: 'Segoe UI', sans-serif; }
+        
+        #chat-toggle-btn { 
+            background: linear-gradient(135deg, var(--skin-primary), var(--skin-secondary)); 
+            color: white; width: 60px; height: 60px; border-radius: 50%; border: none; 
+            font-size: 26px; box-shadow: 0 8px 20px rgba(220, 155, 125, 0.4); 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            animation: pulse 2s infinite; 
+        }
+        
+        .status-dot { position: absolute; top: 12px; right: 14px; width: 11px; height: 11px; background-color: #2ecc71; border-radius: 50%; border: 2px solid white; }
+        
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220, 155, 125, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(220, 155, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 155, 125, 0); } }
+        
+        .chat-box { 
+            display: none; width: 320px; height: 450px; 
+            background: var(--card-bg); /* Variable */
+            backdrop-filter: blur(10px); border-radius: 20px; 
+            box-shadow: var(--shadow); /* Variable */
+            position: absolute; bottom: 80px; right: 0; 
+            flex-direction: column; overflow: hidden; 
+            border: 1px solid var(--border-color); /* Variable */
+            animation: slideUp 0.3s ease-out; 
+        }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .chat-header { background: linear-gradient(135deg, var(--skin-primary), var(--skin-secondary)); padding: 15px; display: flex; align-items: center; color: white; }
+        .robot-avatar { width: 35px; height: 35px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-right: 10px; }
+        .header-info h3 { margin: 0; font-size: 16px; font-weight: 600; color: white !important; }
+        .header-info span { font-size: 11px; opacity: 0.9; color: white; }
+        .close-btn { margin-left: auto; background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+        
+        .chat-messages { 
+            flex: 1; padding: 15px; overflow-y: auto; 
+            background-color: var(--chat-bg); /* Variable */
+            display: flex; flex-direction: column; gap: 10px; 
+        }
+        
+        .chat-messages::-webkit-scrollbar { width: 5px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+        
+        .message { display: flex; align-items: flex-end; max-width: 85%; font-size: 13px; }
+        
+        .bot-message { align-self: flex-start; }
+        .bot-message .msg-text { 
+            background: var(--card-bg); /* Variable */
+            color: var(--text-color); /* Variable */
+            padding: 10px 14px; border-radius: 15px 15px 15px 2px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        }
+        
+        .msg-avatar { width: 24px; height: 24px; background: var(--skin-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-right: 8px; }
+        
+        .user-message { align-self: flex-end; flex-direction: row-reverse; }
+        .user-message .msg-text { 
+            background: linear-gradient(135deg, var(--skin-primary), var(--skin-secondary)); 
+            color: white; padding: 10px 14px; border-radius: 15px 15px 2px 15px; 
+            box-shadow: 0 4px 10px rgba(220, 155, 125, 0.3); 
+        }
+        
+        .chat-input-area { 
+            padding: 12px; background: var(--card-bg); /* Variable */
+            display: flex; align-items: center; 
+            border-top: 1px solid var(--border-color); /* Variable */
+        }
+        
+        .chat-input-area input { 
+            flex: 1; 
+            background: var(--input-bg); /* Variable */
+            border: none; border-radius: 20px; padding: 10px 15px; outline: none; font-size: 13px; 
+            color: var(--text-color); /* Variable */
+        }
+        
+        .chat-input-area button { background: var(--skin-primary); width: 38px; height: 38px; border-radius: 50%; border: none; color: white; font-size: 14px; margin-left: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .chat-input-area button:hover { transform: scale(1.1); background: var(--skin-secondary); }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="{% url 'index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+                <img src="{% static 'assets/img/sa-1.ico' %}" alt="Logo" style="max-height: 50px; margin-right: 10px;">
+                <h1 class="sitename">SkinSense</h1>
+            </a>
+
+            {% if user.is_authenticated %}
+            <div class="translate-top-right">
+                <i class="fab fa-google translate-icon"></i>
+                <div id="google_translate_element"></div>
+            </div>
+            {% endif %}
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ  </a></li>
+
+                        <li class="dropdown ms-3">
+                            <a href="#" class="p-0 d-flex align-items-center">
+                                <div class="google-user-btn">
+                                    {{ user.first_name|slice:":1" }}
+                                </div>
+                            </a>
+                            <ul>
+                                <li><a href="{% url 'account' %}"><i class="fas fa-id-card"></i> Account</a></li>
+                                <li><a href="{% url 'settings' %}"><i class="fas fa-cog"></i> Settings</a></li>
+                                <li><a href="{% url 'history' %}"><i class="fas fa-history"></i> History</a></li>
+                                <li style="border-top: 1px solid var(--border-color); margin: 5px 0;"></li>
+                                <li><a href="{% url 'log_out' %}" style="color: #dc3545;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </li>
+
+                    {% else %}
+                        <li><a href="{% url 'register' %}" class="active">Register</a></li>
+                        <li><a href="{% url 'log_in' %}" class="active">Login</a></li>
+                    {% endif %}
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    {% for message in messages %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        {% if message.tags == 'success' %}
+            <script> swal("{{ message }}", '', 'success'); </script>
+        {% elif message.tags == 'danger' or message.tags == 'error' %}
+            <script> swal("{{ message }}", '', 'error'); </script>
+        {% elif message.tags == 'info' %}
+            <script> swal("{{ message }}", ''); </script>
+        {% endif %}
+    {% endfor %}
+
+    {% block body %}
+    {% endblock body %}
+    
+    <div class="chat-widget">
+        <button id="chat-toggle-btn" onclick="toggleChat()">
+            <i class="fas fa-stethoscope"></i> <div class="status-dot"></div>
+        </button>
+    
+        <div class="chat-box" id="chat-box">
+            <div class="chat-header">
+                <div class="robot-avatar">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="header-info">
+                    <h3>SkinSense </h3>
+                    <span>Virtual Assistant</span>
+                </div>
+                <button class="close-btn" onclick="toggleChat()">&times;</button>
+            </div>
+    
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot-message">
+                    <div class="msg-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="msg-text">Hello! I'm your skin health assistant✨</div>
+                </div>
+            </div>
+    
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container copyright text-center mt-4">
+        <p>© <strong class="px-1 sitename">SkinSense</strong> All Rights Reserved</p>
+        <div class="credits">Designed by <a href="#">Skin Disease Detection Team</a></div>
+    </div>
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <div id="preloader"></div>
+    
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+    </script>
+    
+    <script>
+        // --- 1. GLOBAL DARK MODE LOGIC ---
+        // Check storage immediately to avoid flash of light mode
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle("dark-mode");
+            if (isDark) {
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                localStorage.setItem("darkMode", "disabled");
+            }
+        }
+
+        // --- 2. CHATBOT LOGIC ---
+        function toggleChat() {
+            const chatBox = document.getElementById("chat-box");
+            if (chatBox.style.display === "none" || chatBox.style.display === "") {
+                chatBox.style.display = "flex";
+            } else {
+                chatBox.style.display = "none";
+            }
+        }
+    
+        function handleEnter(event) {
+            if (event.key === "Enter") sendMessage();
+        }
+    
+        function appendMessage(sender, text) {
+            const messagesDiv = document.getElementById("chat-messages");
+            const msgDiv = document.createElement("div");
+            msgDiv.classList.add("message", sender === "bot" ? "bot-message" : "user-message");
+            
+            let avatarHTML = sender === "bot" ? '<div class="msg-avatar"><i class="fas fa-robot"></i></div>' : '';
+            msgDiv.innerHTML = `${avatarHTML}<div class="msg-text">${text}</div>`;
+            
+            messagesDiv.appendChild(msgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    
+        function sendMessage() {
+            const inputField = document.getElementById("user-input");
+            const message = inputField.value.trim();
+            if (!message) return;
+    
+            appendMessage("user", message);
+            inputField.value = "";
+    
+            // Typing Indicator
+            const typingDiv = document.createElement("div");
+            typingDiv.id = "typing-indicator";
+            typingDiv.classList.add("message", "bot-message");
+            typingDiv.innerHTML = '<div class="msg-avatar"><i class="fas fa-robot"></i></div><div class="msg-text">...</div>';
+            document.getElementById("chat-messages").appendChild(typingDiv);
+    
+            fetch("/chatbot_api/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (document.getElementById("typing-indicator")) {
+                    document.getElementById("typing-indicator").remove();
+                }
+                appendMessage("bot", data.reply);
+            })
+            .catch(err => {
+                if (document.getElementById("typing-indicator")) {
+                    document.getElementById("typing-indicator").remove();
+                }
+                appendMessage("bot", "Connection error. Please try again.");
+            });
+        }
+    
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+</body> 
+</html>

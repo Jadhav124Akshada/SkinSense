@@ -1,0 +1,163 @@
+{% extends 'dashboards.html' %}
+{% load static %}
+
+{% block dashboard_content %}
+<style>
+    /* Settings Container Styling */
+    .settings-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .list-group-item {
+        border-color: #f0f0f0;
+        transition: 0.3s;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 1px solid #eee;
+    }
+
+    .form-control:focus {
+        border-color: var(--skin-primary);
+        box-shadow: 0 0 0 3px rgba(220, 155, 125, 0.2);
+    }
+
+    /* Professional Alert */
+    .alert-professional {
+        background-color: rgba(220, 155, 125, 0.1);
+        border: none;
+        color: var(--skin-dark);
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="container-fluid animate-in">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+            
+            <div class="section-title mb-4">
+                <h2 class="h3 text-gray-800"><i class="fas fa-cog me-2"></i> Settings</h2>
+                <p class="text-muted">Manage your security and dashboard preferences</p>
+            </div>
+
+            <div class="card settings-card shadow-sm border-0 mb-5">
+                <div class="list-group list-group-flush">
+                    
+                    <div class="list-group-item p-4">
+                        <div class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#passwordCollapse" role="button" aria-expanded="false" style="cursor: pointer;">
+                            <div>
+                                <h5 class="mb-1 fw-bold" style="color: var(--skin-dark);"><i class="fas fa-lock me-2"></i> Change Password</h5>
+                                <small class="text-muted">Update your portal login credentials</small>
+                            </div>
+                            <i class="fas fa-chevron-down text-muted"></i>
+                        </div>
+
+                        <div class="collapse mt-3" id="passwordCollapse">
+                            <div class="card card-body border-0 rounded-4" style="background-color: #fcfcfc; border: 1px solid #eee !important;">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label">Current Password</label>
+                                        <input type="password" name="old_password" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">New Password</label>
+                                        <input type="password" name="new_password" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Confirm New Password</label>
+                                        <input type="password" name="confirm_password" class="form-control" required>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn w-100 text-white shadow-sm" style="background: var(--skin-primary); border-radius: 10px; font-weight: 600;">
+                                        Update Password
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item p-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1 fw-bold"><i class="fas fa-moon me-2"></i> Dark Mode</h5>
+                            <small class="text-muted">Switch dashboard interface theme</small>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkModeSwitch" onchange="toggleDarkMode()">
+                        </div>
+                    </div>
+
+                    <div class="list-group-item p-4">
+                        <button type="button" class="btn btn-outline-danger w-100 text-start d-flex justify-content-between align-items-center border-0 p-0" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <div>
+                                <h5 class="mb-1 fw-bold text-danger"><i class="fas fa-trash-alt me-2"></i> Delete Doctor Account</h5>
+                                <small class="text-muted">Permanently remove your professional profile</small>
+                            </div>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="alert alert-professional rounded-4 p-3 shadow-sm">
+                <i class="fas fa-info-circle me-2"></i> 
+                Note: Deleting your account will remove your access to all patient histories.
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+            <div class="modal-header border-0 pt-4 px-4">
+                <h5 class="modal-title text-danger fw-bold">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4">
+                Are you sure you want to delete your doctor profile? <br>
+                <strong class="text-danger">This action cannot be undone and all patient data associations will be lost.</strong>
+            </div>
+            <div class="modal-footer border-0 pb-4 px-4">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_account" value="true">
+                    <button type="submit" class="btn btn-danger rounded-pill px-4">Confirm Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Logic to handle theme switch if dark mode exists in your main.css
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+            document.getElementById("darkModeSwitch").checked = true;
+        }
+    });
+</script>
+
+{% endblock %}

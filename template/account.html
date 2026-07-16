@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<style>
+    /* SkinSense Theme Variables */
+    :root {
+        --skin-primary: #dc9b7d;
+        --skin-secondary: #c48b6f;
+        --white: #ffffff;
+    }
+
+    /* Header Gradient */
+    .profile-header {
+        background: linear-gradient(135deg, var(--skin-primary), var(--skin-secondary));
+        color: white;
+        padding: 40px 20px;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+
+    /* Profile Card */
+    .profile-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    /* Avatar Circle */
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+        color: white;
+        margin: 0 auto 15px auto;
+    }
+
+    /* Custom Inputs */
+    .form-label {
+        font-weight: 600;
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        background-color: #fcfcfc;
+    }
+    
+    .form-control:focus {
+        border-color: var(--skin-primary);
+        box-shadow: 0 0 0 3px rgba(220, 155, 125, 0.2);
+    }
+
+    /* Save Button */
+    .btn-save {
+        background: var(--skin-primary);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 0.3s;
+        width: 100%;
+    }
+    .btn-save:hover {
+        background: var(--skin-secondary);
+        transform: translateY(-2px);
+    }
+</style>
+
+<section class="section" style="padding-top: 120px; padding-bottom: 60px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                
+                <div class="card profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            {{ user.first_name|slice:":1"|default:user.username|slice:":1" }}
+                        </div>
+                        <h3 class="mb-1">
+                            {% if user.first_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        </h3>
+                        <p class="mb-0 opacity-75">Member since {{ joined_date }}</p>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        
+                        {% if not user.first_name or not user.last_name or not user.email %}
+                            <div class="alert alert-warning border-0 bg-warning bg-opacity-10 text-warning mb-4">
+                                <i class="fas fa-exclamation-circle me-2"></i> 
+                                Some profile information is missing. Please fill it below.
+                            </div>
+                        {% endif %}
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" value="{{ user.username }}" disabled style="background-color: #f0f0f0;">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" 
+                                           value="{{ user.first_name }}" 
+                                           placeholder="Enter your first name" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" 
+                                           value="{{ user.last_name }}" 
+                                           placeholder="Enter your last name" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" name="email" class="form-control" 
+                                           value="{{ user.email }}" 
+                                           placeholder="example@email.com" required>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-save">
+                                        <i class="fas fa-save me-2"></i> Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base1.html" %}
+
+{% block body %}
+<!-- Doctor Registration Section -->
+<section id="doctor-register" class="doctor-register section" style="margin-top: 50px;">
+
+  <!-- Section Title -->
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Doctor Registration</h2>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-10">
+        <div class="card shadow p-4 rounded-3">
+          <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+              
+              <div class="col-md-6">
+                <label for="fname" class="form-label">First Name</label>
+                <input type="text" id="fname" class="form-control" name="fname" placeholder="Enter First Name" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="lname" class="form-label">Last Name</label>
+                <input type="text" id="lname" class="form-control" name="lname" placeholder="Enter Last Name" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="username" class="form-label">Email Address</label>
+                <input type="email" id="username" class="form-control" name="username" placeholder="Enter Email Address" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" name="password" placeholder="Enter Password" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="cpassword" class="form-label">Confirm Password</label>
+                <input type="password" id="cpassword" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="specialization" class="form-label">Specialization</label>
+                <input type="text" id="specialization" class="form-control" name="specialization" placeholder="e.g. Cardiologist" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="contact" class="form-label">Contact Number</label>
+                <input type="text" id="contact" class="form-control" name="contact" placeholder="Enter Contact Number" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="location" class="form-label">Location / City</label>
+                <input type="text" id="location" class="form-control" name="location" placeholder="Enter Location/City" required>
+              </div>
+              
+              <div class="col-12 d-grid">
+                <button type="submit" class="btn btn-success" style="background-color: #dc9b7d; border-color: #dc9b7d; color: white;">Register as Doctor</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section><!-- /Doctor Registration Section -->
+{% endblock body %}

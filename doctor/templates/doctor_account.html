@@ -1,0 +1,164 @@
+{% extends 'dashboards.html' %}
+{% load static %}
+
+{% block dashboard_content %}
+<style>
+    /* Profile Card Styling */
+    .profile-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    /* Header Gradient */
+    .profile-header {
+        background: linear-gradient(135deg, var(--skin-primary), var(--skin-dark));
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    /* Avatar Circle */
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+        color: white;
+        margin: 0 auto 15px auto;
+    }
+
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        background-color: #fcfcfc;
+        transition: 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: var(--skin-primary);
+        box-shadow: 0 0 0 3px rgba(220, 155, 125, 0.2);
+        outline: none;
+    }
+
+    .btn-save {
+        background: var(--skin-primary);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .btn-save:hover {
+        background: var(--skin-dark);
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .animate-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+</style>
+
+<div class="container-fluid animate-in">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+            
+            <div class="card profile-card mb-5">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        {{ doctor.user.first_name.0|upper }}
+                    </div>
+                    <h3 class="mb-1">Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h3>
+                    <p class="mb-0 opacity-75">{{ doctor.specialization }}</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    {% if not doctor.user.first_name or not doctor.contact %}
+                        <div class="alert alert-warning border-0 bg-warning bg-opacity-10 text-dark mb-4 rounded-3">
+                            <i class="fas fa-exclamation-circle me-2"></i> 
+                            Please ensure your contact and name details are up to date for patient records.
+                        </div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <label class="form-label">Username / Email</label>
+                                <input type="text" class="form-control" value="{{ doctor.user.username }}" disabled style="background-color: #f0f0f0;">
+                                <small class="text-muted">Your registered email cannot be changed.</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" name="fname" class="form-control" 
+                                       value="{{ doctor.user.first_name }}" 
+                                       placeholder="Enter your first name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="lname" class="form-control" 
+                                       value="{{ doctor.user.last_name }}" 
+                                       placeholder="Enter your last name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Specialization</label>
+                                <input type="text" name="specialization" class="form-control" 
+                                       value="{{ doctor.specialization }}" 
+                                       placeholder="e.g. Dermatologist" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Contact Number</label>
+                                <input type="text" name="contact" class="form-control" 
+                                       value="{{ doctor.contact }}" 
+                                       placeholder="Enter your phone number" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Clinic Location / City</label>
+                                <input type="text" name="location" class="form-control" 
+                                       value="{{ doctor.location }}" 
+                                       placeholder="Enter your city or clinic address" required>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-save shadow-sm">
+                                    <i class="fas fa-save me-2"></i> Update Doctor Profile
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Doctor's Portal - SkinSense</title>
+    
+    <link href="{% static 'assets/img/file.svg' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+    <style>
+        /* --- MOBILE NAV TOGGLE STYLE --- */
+        .mobile-nav-toggle {
+            color: #444444;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0;
+            transition: 0.3s;
+            z-index: 9999;
+            margin-left: 15px;
+        }
+        
+        .mobile-nav-toggle:hover {
+            color: #dc9b7d;
+        }
+
+    
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
+                <img src="{% static 'assets/img/sa-1.ico' %}" alt="Logo" style="max-height: 50px; margin-right: 10px;">
+                <h1 class="sitename">Doctor's Portal</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    {% if not user.is_authenticated %}
+                        <li><a href="{% url 'doctor_register' %}">Register</a></li>
+                        <li><a href="{% url 'doctor_login' %}" class="active">Login</a></li>
+                    {% else %}
+                        <li><a href="{% url 'doctor_logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
+    </header>
+
+    {% for message in messages %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        {% if message.tags == 'success' %}
+            <script> swal("{{ message }}", '', 'success'); </script>
+        {% elif message.tags == 'danger' or message.tags == 'error' %}
+            <script> swal("{{ message }}", '', 'error'); </script>
+        {% elif message.tags == 'info' %}
+            <script> swal("{{ message }}", ''); </script>
+        {% endif %}
+    {% endfor %}
+
+    {% block body %}
+    {% endblock body %}
+
+    <footer class="footer position-relative light-background mt-5">
+        <div class="container copyright text-center mt-4">
+            <p>© <strong>Doctor's Portal</strong> 2026. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <div id="preloader"></div>
+    
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>
