@@ -1,9 +1,2 @@
 Django>=4.0,<5.0
 Pillow
-numpy
-# Add ONLY the one you actually use:
-tensorflow-cpu==2.15.0     # Use '-cpu' to keep the build size small!
-# OR
-opencv-python-headless     # Headless version is required for cloud servers
-# OR
-scikit-learn
